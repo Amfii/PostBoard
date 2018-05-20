@@ -1,0 +1,36 @@
+﻿
+<p *ngIf="!post"><em>Loading...</em></p>
+
+<h1>{{ post?.title }}</h1>
+
+<div class="block">
+	<div class="subheadline">{{ post?.createUser }} - {{ post?.comments?.length }} comments - {{ post?.createDate | date: "medium" }}</div>
+
+	<p class="info">
+		{{ post?.content }}
+	</p>
+</div>
+
+<h4>Comments ({{ post?.comments?.length }})</h4>
+
+<form #f="ngForm" (ngSubmit)="submitComment()" novalidate>
+	<div class="form-group">
+		<label for="createUser">Email</label>
+		<input name="createUser" id="createUser" type="email" class="form-control" [(ngModel)]="comment.createUser" required email #createUser="ngModel">
+		<div class="alert alert-danger" *ngIf="createUser.touched && !createUser.valid">Specified email is not valid.</div>
+	</div>
+	<div class="form-group">
+		<label for="content">Comment</label>
+		<textarea name="content" id="content" type="text" rows="3" class="form-control" [(ngModel)]="comment.content" required #content="ngModel"></textarea>
+	</div>
+	<button [disabled]="!f.valid" class="btn btn-primary">Submit</button>
+</form>
+
+<div *ngFor="let comment of post?.comments?.reverse()" class="comment-block">
+	<h3 class="headline">{{ comment.createUser }}</h3>
+	<div class="subheadline">{{ comment.createDate | date: "medium" }}</div>
+
+	<p class="info">
+		{{ comment.content }}
+	</p>
+</div>
