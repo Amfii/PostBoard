@@ -35,7 +35,7 @@ export class ViewPostComponent implements OnInit {
 
     ngOnInit() {
         this.postService.getPost(this.postId)
-            .subscribe(post => this.post = post);
+            .subscribe(post => { this.post = post }, error => console.error(error));
     }
 
     /*
@@ -46,6 +46,6 @@ export class ViewPostComponent implements OnInit {
         result$.subscribe(comment => {
             this.comment.content = '';
             this.post.comments.push(comment);
-        });
+        }, error => console.error(error));
     }
 }

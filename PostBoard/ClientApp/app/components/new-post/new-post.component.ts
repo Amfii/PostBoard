@@ -27,6 +27,6 @@ export class NewPostComponent {
         var result$ = this.postService.create(this.post);
         result$.subscribe(post => {
             this.router.navigate(['/posts/', post.postId])
-        });
+        }, error => console.error(error));
     }
 }

@@ -1,4 +1,5 @@
-﻿
+﻿import { Comment } from './comment';
+
 export interface Post {
     postId: number;
     title: string;

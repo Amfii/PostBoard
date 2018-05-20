@@ -1,5 +1,5 @@
 ﻿import { Injectable, Inject } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Post } from '../models/post';
 
@@ -7,29 +7,26 @@ import { Post } from '../models/post';
 export class PostService {
     private readonly postsEndpoint = 'api/Posts/Posts';
 
-    constructor(private http: Http, @Inject('BASE_URL') private baseUrl: string) { }
+    constructor(private httpClient: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
     /*
      * Get all posts
      */
     getPosts() {
-        return this.http.get(this.baseUrl + this.postsEndpoint)
-            .map(res => res.json());
+        return this.httpClient.get<Post[]>(this.baseUrl + this.postsEndpoint);
     }
 
     /*
      * Get selected post
      */
     getPost(id: number) {
-        return this.http.get(this.baseUrl + this.postsEndpoint + '/' + id)
-            .map(res => res.json());
+        return this.httpClient.get<Post>(this.baseUrl + this.postsEndpoint + '/' + id);
     }
 
     /*
      * Create new post
      */
     create(post: Post) {
-        return this.http.post(this.baseUrl + this.postsEndpoint, post)
-            .map(res => res.json());
+        return this.httpClient.post<Post>(this.baseUrl + this.postsEndpoint, post);
     }
 }
